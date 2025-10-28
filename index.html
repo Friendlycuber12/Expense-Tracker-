@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Expense Tracker — Mini Project</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div>
+        <h1>Expense Tracker</h1>
+        <div class="sub">Simple, local, fast — tracks your expenses in localStorage.</div>
+      </div>
+      <div class="sub small-muted">Tip: data is saved locally in your browser</div>
+    </header>
+
+    <main class="left">
+      <section class="card" id="formCard" aria-labelledby="formTitle">
+        <h3 id="formTitle">Add Expense</h3>
+        <form id="expenseForm">
+          <div class="row">
+            <div style="flex:1">
+              <label for="amount">Amount (₹)</label>
+              <input id="amount" type="number" step="0.01" min="0" placeholder="e.g. 250" required>
+            </div>
+            <div style="width:150px">
+              <label for="date">Date</label>
+              <input id="date" type="date" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="flex:1">
+              <label for="category">Category</label>
+              <select id="category" required>
+                <option value="">Choose category</option>
+                <option>🍔Food</option>
+                <option>🚗Transport</option>
+                <option>🧺Groceries</option>
+                <option>🛒Shopping</option>
+                <option>💡Bills</option>
+                <option>🎥Entertainment</option>
+                <option>❓Other</option>
+              </select>
+            </div>
+            <div style="flex:1">
+              <label for="description">Description</label>
+              <input id="description" type="text" placeholder="e.g. Lunch at cafe">
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="btn" type="submit" id="saveBtn">Add Expense</button>
+            <button class="btn ghost" type="button" id="clearBtn">Clear</button>
+            <button class="btn ghost" type="button" id="exportBtn">Export CSV</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="controls">
+          <div class="filters" style="flex:1">
+            <div>
+              <label for="filterCategory">Filter category</label>
+              <select id="filterCategory">
+                <option value="">All</option>
+                <option>Food</option>
+                <option>Transport</option>
+                <option>Groceries</option>
+                <option>Shopping</option>
+                <option>Bills</option>
+                <option>Entertainment</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="filterMonth">Filter month</label>
+              <input id="filterMonth" type="month">
+            </div>
+          </div>
+
+          <div style="min-width:220px">
+            <label for="searchInput">Search</label>
+            <input id="searchInput" placeholder="search description or amount">
+          </div>
+        </div>
+      </section>
+
+      <section class="card total-box">
+        <div>
+          <div class="small-muted">Total expenses</div>
+          <div class="big" id="totalAmount">₹0.00</div>
+        </div>
+        <div style="text-align:right">
+          <div class="small-muted">Entries</div>
+          <div id="countEntries" class="pill">0</div>
+        </div>
+      </section>
+
+      <section class="card" id="listCard" aria-labelledby="listTitle">
+        <h3 id="listTitle">Expenses</h3>
+
+        <div style="overflow:auto;max-height:420px;">
+          <table id="expensesTable" aria-live="polite">
+            <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th style="text-align:right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="expensesTbody">
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <aside class="right">
+      <section class="card">
+        <h4>Spending by Category</h4>
+        <div class="chart-wrap">
+          <canvas id="pieChart" aria-label="Expense distribution chart" role="img"></canvas>
+        </div>
+        <div class="small-muted" style="margin-top:8px">Chart updates automatically when you add/delete expenses.</div>
+      </section>
+
+      <section class="card">
+        <h4>Quick Tips</h4>
+        <ul style="margin:8px 0 0 16px;color:var(--muted)">
+          <li>Use categories to analyze spending easily.</li>
+          <li>Export CSV to view data in Excel or Google Sheets.</li>
+          <li>Data is stored in your browser only — clear local storage to reset.</li>
+        </ul>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn ghost" id="resetBtn">Reset All</button>
+          <button class="btn ghost" id="importBtn">Import CSV</button>
+        </div>
+        <input id="fileInput" type="file" accept=".csv" style="display:none">
+      </section>
+    </aside>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
